@@ -17,6 +17,10 @@ AppDataSource.initialize()
 // Use the express json bodyparser 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.status(200).json('Welcome to TypeORM integration with MySQL class')
+})
+
 // Connect to our server
 app.listen(PORT, () => {
     console.log(`Server is runnning on PORT: ${PORT}`)
