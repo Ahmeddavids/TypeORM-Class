@@ -1,6 +1,7 @@
 // Import express
 const express = require('express');
 const AppDataSource = require('./config/dbConfig');
+const router = require('./routes/userRouter');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -16,6 +17,7 @@ AppDataSource.initialize()
 
 // Use the express json bodyparser 
 app.use(express.json());
+app.use('/api/users/', router);
 
 app.get('/', (req, res) => {
     res.status(200).json('Welcome to TypeORM integration with MySQL class')
