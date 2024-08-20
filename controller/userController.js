@@ -7,13 +7,16 @@ const userRepository = AppDataSource.getRepository(User)
 // Controller function to create a new user
 exports.createUser = async (req, res) => {
     try {
-        const {email, name} = req.body;
+        const { email, name } = req.body;
         const newUser = userRepository.create({
             email,
             name
         });
         const result = await userRepository.save(newUser);
-        res.status(201).json({ message: 'User created successfully', result });
+        res.status(201).json({
+            message: 'User created successfully', 
+            data: result
+        });
     } catch (error) {
         console.log('Error creating user:', error);
         res.status(500).json({ error: 'Failed to create user' });
