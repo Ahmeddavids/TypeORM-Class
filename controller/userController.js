@@ -7,8 +7,11 @@ const userRepository = AppDataSource.getRepository(User)
 // Controller function to create a new user
 exports.createUser = async (req, res) => {
     try {
-        const userRepository = AppDataSource.getRepository(User);
-        const newUser = userRepository.create(req.body);
+        const {email, name} = req.body;
+        const newUser = userRepository.create({
+            email,
+            name
+        });
         const result = await userRepository.save(newUser);
         res.status(201).json({ message: 'User created successfully', result });
     } catch (error) {
@@ -20,7 +23,6 @@ exports.createUser = async (req, res) => {
 // Controller function to get all users
 exports.getUsers = async (req, res) => {
     try {
-        const userRepository = AppDataSource.getRepository(User);
         const users = await userRepository.find();
         res.json({ message: `The total users in our database is ${users.length}`, users });
     } catch (error) {
@@ -53,7 +55,7 @@ exports.updateUser = async (req, res) => {
         if (user) {
             userRepository.merge(user, req.body);
             const result = await userRepository.save(user);
-            res.json(result);
+            res.json({ message: 'User updated successfully', result });
         } else {
             res.status(404).json({ message: 'User not found' });
         }
