@@ -1,9 +1,10 @@
+require('dotenv').config();
 const { EntitySchema } = require('typeorm');
 
 // Define the User entity schema
-module.exports = new EntitySchema({
+const UserEntity = new EntitySchema({
     name: 'User',
-    tableName: 'c4festac',
+    tableName: process.env.DB_NAME,
     columns: {
         id: {
             primary: true,
@@ -12,9 +13,12 @@ module.exports = new EntitySchema({
         },
         name: {
             type: 'varchar',
+            // nullable: false
         },
         email: {
             type: 'varchar',
         },
     },
 });
+
+module.exports  = UserEntity
